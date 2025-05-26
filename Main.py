@@ -9,6 +9,7 @@ class Main:
         print("1. Please ensure proper versions of PIM is used to apply the EBF\n")
         print("2. Ensure that the PIM server is stopped before the execution of this program\n")
         print("3. Please have a backup of the PIM folder before proceeding further\n")
+        print("4. This program will apply the EBF only with plugins, features & variants\n")
         print("To stop processing, press Ctrl+C at any time.\n")
         print("--------------------------------------------------------------------------------------\n")
         
