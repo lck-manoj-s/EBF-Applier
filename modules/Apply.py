@@ -66,7 +66,10 @@ class Apply:
             else:
                 copy2(src_path, dst)  
 
-            fileObj.write("The file %s has been copied to %s\n\n"%(src_path, dst))
+            fileObj.write("The file \"%s\" has been copied to \"%s\"\n\n"%(src_path, dst))
 
-        fileObj.write("Total number of items removed: %d\nTotal number of items copied: %d\n"%(removed_files, copied_files))
-    
+        fileObj.write("Total number of items removed: %d\nTotal number of items copied: %d\n\n\n"%(removed_files, copied_files))
+
+        #Clearing the source and target lists
+        self.source.clear() 
+        self.target.clear()

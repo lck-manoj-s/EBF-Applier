@@ -1,6 +1,6 @@
 import os
 from collections import defaultdict
-from Apply import Apply
+from .Apply import Apply
 
 class Check:
 
@@ -98,7 +98,7 @@ class Check:
                 if folder in self.allowed_folders:
                     if self.check_paths(pim_path):
                         self.file_obj.write(f"Processing folder: {folder} in {items}\n")
-                        startEBF.process(src=hotfolder_path, dst=pim_path)
+                        startEBF.process(src=hotfolder_path, dst=pim_path, fileObj=self.file_obj)
                     else:
                         self.file_obj.write(f"Skipping folder: {folder} in {items} does not exist in PIM path.\n")
                 else:
