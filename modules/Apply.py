@@ -2,6 +2,7 @@ import os
 from os.path import isdir, join
 from shutil import rmtree, copy2, copytree
 from typing import TextIO
+import re
 
 class Apply:
     def __init__(self):
@@ -14,17 +15,24 @@ class Apply:
 
         self.changeFiles(src=src, dst=dst, fileObj=fileObj)
 
-    def getFileName(self, file: str) -> str:
+    def getFileName(self, file: str, file_path: str) -> str:
         n = len(file)
 
-        if file[n-4:n] == '.jar':
+        if isdir(file_path):
+            n -= 1
+        
+        elif file[n-4:n] == '.jar':
+            file = file[0:n-4]
             n -= 5
-        else:
-            n -= 1
         
-        while n >= 0 and file[n] != 'r':
-            n -= 1
+        revision = file[n-6:]
+
+        #print("File name: %s, Revison: %s\n"%(file, revision))
         
+        pattern = r'^\.r\d{5}$'
+        if re.match(pattern, revision):
+            n -= 6
+
         return file[0:n]
 
     def getFiles(self, dir: str, source: bool) -> None:
@@ -40,7 +48,9 @@ class Apply:
 
         for sfile in self.source:
 
-            name = self.getFileName(sfile)
+            sfile_path = os.path.join(src, sfile)
+            name = self.getFileName(file=sfile, file_path=sfile_path)
+
             src_path = join(src, sfile)
 
             for tfile in self.target:
@@ -55,6 +65,8 @@ class Apply:
                     
                     if os.path.exists(dst_path):
                         os.remove(dst_path)
+                
+                    fileObj.write("File Deleted: %s \n"%(dst_path))
             
             copied_files += 1
             dst_path = join(dst, sfile)
@@ -66,9 +78,9 @@ class Apply:
             else:
                 copy2(src_path, dst)  
 
-            fileObj.write("The file \"%s\" has been copied to \"%s\"\n\n"%(src_path, dst))
+            fileObj.write("File Copied: %s\\%s\n\n"%(dst, sfile))
 
-        fileObj.write("Total number of items removed: %d\nTotal number of items copied: %d\n\n\n"%(removed_files, copied_files))
+        fileObj.write("Total number of items removed: %d\nTotal number of items copied: %d\n"%(removed_files, copied_files))
 
         #Clearing the source and target lists
         self.source.clear() 

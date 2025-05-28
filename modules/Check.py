@@ -7,7 +7,8 @@ class Check:
     def __init__(self):
         self.items = []
         self.folders = defaultdict(list)
-        self.allowed_folders = ["plugins", "features","variants"]
+        self.allowed_folders = ["plugins", "features"]
+        self.allowed_items = ["server", "client", "variants"]
         self.file_obj = None
 
     # Check if the provided path exists and is a directory.
@@ -54,6 +55,7 @@ class Check:
                     else:
                         print(f"Directory: {item} is empty.")
 
+    # Create a log file in the specified path.
     def create_log(self, path: str) -> None:
         if not self.check_paths(path):
             print(f"Path '{path}' does not exist or is not a directory.")
@@ -90,16 +92,31 @@ class Check:
         startEBF = Apply()
 
         for items, folders in self.folders.items():
-            for folder in folders:
-                hotfolder_path = os.path.join(hotfolder, items, folder)
-                pim_path = os.path.join(pim, items, folder)
 
-                # Check if the folder is in the allowed folders list
-                if folder in self.allowed_folders:
-                    if self.check_paths(pim_path):
-                        self.file_obj.write(f"Processing folder: {folder} in {items}\n")
-                        startEBF.process(src=hotfolder_path, dst=pim_path, fileObj=self.file_obj)
+            # Check if the item is in the allowed items list
+            if items in self.allowed_items:
+
+                for folder in folders:
+                    hotfolder_path = os.path.join(hotfolder, items, folder)
+                    pim_path = os.path.join(pim, items, folder)
+
+                    # Check if the folder is in the allowed folders list
+                    if folder in self.allowed_folders:
+
+                        if self.check_paths(pim_path):
+                            self.file_obj.write("-----------------------------------------------------\n")
+                            self.file_obj.write(f"Processing folder: {folder} in {items}\n\n")
+                            startEBF.process(src=hotfolder_path, dst=pim_path, fileObj=self.file_obj)
+                            self.file_obj.write("------------------------------------------------------\n\n\n")
+                        
+                        else:
+                            self.file_obj.write(f"Skipping folder: {folder} in {items} does not exist in PIM path.\n")
+                    
                     else:
-                        self.file_obj.write(f"Skipping folder: {folder} in {items} does not exist in PIM path.\n")
-                else:
-                    self.file_obj.write(f"Skipping folder: {folder} in {items} as it is not allowed.\n")
+                        self.file_obj.write(f"Skipping folder: {folder} in {items} as it is not allowed.\n")
+            
+            else:
+                self.file_obj.write(f"Skipping main folder: {items} as it is not allowed.\n")
+        
+        # Close the log file after processing
+        self.file_obj.close()
