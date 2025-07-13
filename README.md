@@ -25,13 +25,13 @@ By automating this process, the code ensures that the Informatica PIM system is 
 ```
 EBF-Applier
 ├── modules/
-    ├── Apply.py
-    ├── Check.py
-    ├── Loading.py
-    └── __init__.py
+|   ├── Apply.py
+|   ├── Check.py
+|   ├── Loading.py
+|   └── __init__.py
 ├── Main.py
 ├── __init__.py
-├── README.md
+└── README.md
 ```
 
 - `modules/`: Contains all the python files required for running the application.
