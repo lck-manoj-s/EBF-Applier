@@ -1,0 +1,10 @@
+.vscode/
+notes/
+__*/
+*.exe
+*.md
+*.spec
+build/
+dist/
+backups/
+.git
