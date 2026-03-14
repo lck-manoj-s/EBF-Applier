@@ -1,7 +1,4 @@
-from Loading import loading
-from Backup import Backup
-from Apply import Apply
-from GetFile import GetFile
+from .modules import loading, Backup, Apply, GetFile
 
 from time import sleep
 import os
