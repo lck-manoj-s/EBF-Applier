@@ -28,6 +28,7 @@ EBF-Applier
 |   ├── Apply.py
 |   ├── Check.py
 |   ├── Loading.py
+|   ├── GetFile.py
 |   └── __init__.py
 ├── Main.py
 ├── __init__.py
@@ -35,9 +36,10 @@ EBF-Applier
 ```
 
 - `modules/`: Contains all the python files required for running the application.
-- `Apply.py`: Scripts that automate the moving of required `.jar` files from the EBF folder to the PIM folder.
-- `Check.py`: The python script that is used to validate all the paths used in the process and some listing tasks.
-- `Loading.py`: Script that is used to generate the loading part of the application.
+- `Apply.py`: Automates the moving of required `.jar` files from the EBF folder to the PIM folder.
+- `Check.py`: Used to validate all the paths used in the process and some listing tasks.
+- `Loading.py`: Generates the loading part of the application.
+- `GetFile.py`: Returns the file path in the given EBF Folder for the respective target and component.
 - `__init__.py`: Created to make the python look these files as a package.
 - `Main.py`: The main python script that is used to interlink & co-ordinate all the modules for efficient working of the application.
 - `READE.md`: Project Documentation
